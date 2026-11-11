@@ -144,11 +144,14 @@ function lockPiece() {
 }
 
 function spawn() {
+  // Si la siguiente pieza no cabe, se acaba el juego: no sale ninguna ficha más
+  if (collide(next.shape, next.x, next.y)) {
+    current = null;
+    endGame();
+    return;
+  }
   current = next;
   next = randomPiece();
-  if (collide(current.shape, current.x, current.y)) {
-    endGame();
-  }
   drawNext();
 }
 
@@ -196,6 +199,8 @@ function draw() {
     for (let c = 0; c < COLS; c++)
       drawBlock(ctx, c, r, board[r][c], BLOCK);
 
+  if (!current) return; // game over: solo el tablero, sin pieza activa
+
   // ghost
   const gy = ghostY();
   for (let r = 0; r < current.shape.length; r++)
@@ -223,6 +228,7 @@ function drawNext() {
 function endGame() {
   gameOver = true;
   cancelAnimationFrame(animId);
+  draw();
   overlayTitle.textContent = 'GAME OVER';
   overlayScore.textContent = `Puntuación: ${score.toLocaleString()}`;
   overlay.classList.remove('hidden');
@@ -243,6 +249,7 @@ function togglePause() {
 }
 
 function loop(ts) {
+  if (gameOver || paused) return;
   const dt = ts - lastTime;
   lastTime = ts;
   dropAccum += dt;
@@ -255,7 +262,8 @@ function loop(ts) {
     }
   }
   draw();
-  animId = requestAnimationFrame(loop);
+  // endGame() puede haberse llamado durante lockPiece(): no reprogramar el loop
+  if (!gameOver) animId = requestAnimationFrame(loop);
 }
 
 function init() {
@@ -309,7 +317,7 @@ function applyTheme(theme) {
   else delete root.dataset.theme;
   themeToggle.setAttribute('aria-checked', String(theme === 'light'));
   gridColor = getComputedStyle(root).getPropertyValue('--grid').trim() || '#22222e';
-  if (current) draw(); // repinta también en pausa / game over
+  if (board) draw(); // repinta también en pausa / game over
 }
 
 themeToggle.addEventListener('click', () => {

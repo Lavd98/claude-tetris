@@ -59,7 +59,18 @@ jobs:
                - Si el evento es "edited": actualiza el diagnóstico anterior en lugar de crear uno nuevo:
                  `gh issue comment ${{ github.event.issue.number }} --body-file /tmp/diagnostico.md --edit-last --create-if-none`
 
-            Formato del diagnóstico (Markdown):
+            Formato del diagnóstico: el comentario DEBE estar escrito en GitHub Flavored Markdown (GFM)
+            válido para que GitHub lo renderice correctamente. En particular:
+            - Usa encabezados (`##`, `###`), listas con `-` o `1.`, y **negritas** con doble asterisco.
+            - Deja una línea en blanco antes y después de encabezados, listas, tablas y bloques de código.
+            - Pon el código en bloques con triple backtick e indica el lenguaje (```js, ```html, ```css).
+            - Usa `backticks` para nombres de archivos, funciones y variables.
+            - Si usas tablas, que tengan fila de encabezado y separador (`| --- |`).
+            - Para enlazar a líneas del código usa enlaces de GitHub:
+              https://github.com/${{ github.repository }}/blob/${{ github.sha }}/archivo#L10
+            - No envuelvas todo el comentario en un bloque de código ni escapes los caracteres de Markdown.
+
+            Estructura del diagnóstico:
 
             ## 🤖 Diagnóstico automático
             **Tipo:** (bug / mejora / documentación / pregunta / ...)
@@ -71,7 +82,7 @@ jobs:
 
             ### Análisis
             Causa probable (si es bug) o alcance del cambio (si es mejora), citando archivos y funciones
-            concretas con el formato `archivo:línea`.
+            concretas (nombre en `backticks` + enlace de GitHub a la línea).
 
             ### Propuesta de solución
             Pasos concretos para implementarla: qué archivos tocar, qué funciones crear/modificar y

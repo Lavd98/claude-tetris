@@ -42,6 +42,7 @@ Es una versión jugable del Tetris clásico con todas las mecánicas que esperar
 - **Sistema de puntuación** clásico de Tetris (100 / 300 / 500 / 800 multiplicado por nivel).
 - **Niveles** que aumentan cada 10 líneas y aceleran la caída.
 - **Pausa** y **Game Over** con opción de reinicio.
+- **Skins** seleccionables desde el panel (_Retro_, _Neon_, _Pastel_, _Pixel art_), compatibles con el modo claro/oscuro y guardadas en `localStorage`.
 
 ---
 
@@ -176,6 +177,19 @@ Algunos parámetros fáciles de tunear en `game.js`:
 | `COLORS`       | Paleta de colores por tipo de pieza      | 7 colores             |
 | `LINE_SCORES`  | Puntos por 1, 2, 3 o 4 líneas eliminadas | `[0,100,300,500,800]` |
 | `dropInterval` | Velocidad inicial de caída en ms         | `1000`                |
+
+### Skins
+
+El selector **SKIN** del panel cambia la apariencia completa sin recargar la página (también en pausa o tras el Game Over). La elección se guarda en `localStorage` con la clave `tetris-skin`.
+
+| Skin        | Aspecto                                                                          |
+| ----------- | -------------------------------------------------------------------------------- |
+| `retro`     | Bloques cuadrados con colores planos (estilo original, por defecto)              |
+| `neon`      | Fondo negro siempre (en ambos temas) y _glow_ con `shadowBlur` del color de pieza |
+| `pastel`    | Paleta suave y bloques con esquinas redondeadas (`roundRect` o arcos manuales)    |
+| `pixel`     | Bisel y textura de píxeles en damero dibujada sobre cada bloque                  |
+
+Cada skin vive en el objeto `SKINS` de `game.js` con la forma `{ colors, grid, boardBg, drawBlock(ctx, x, y, color, size, alpha) }`. `grid` y `boardBg` en `null` usan los colores del tema claro/oscuro. Para añadir una skin nueva basta con agregar una entrada a `SKINS` y una `<option>` al `<select id="skin-select">`.
 
 > Si cambias `COLS`, `ROWS` o `BLOCK`, recuerda ajustar también `width` y `height` del `<canvas id="board">` en `index.html` para que coincida (`COLS × BLOCK` × `ROWS × BLOCK`).
 

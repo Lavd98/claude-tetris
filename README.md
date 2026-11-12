@@ -42,6 +42,9 @@ Es una versión jugable del Tetris clásico con todas las mecánicas que esperar
 - **Sistema de puntuación** clásico de Tetris (100 / 300 / 500 / 800 multiplicado por nivel).
 - **Niveles** que aumentan cada 10 líneas y aceleran la caída.
 - **Pausa** y **Game Over** con opción de reinicio.
+- **Skins** seleccionables desde el panel (_Retro_, _Neon_, _Pastel_, _Pixel art_), compatibles con el modo claro/oscuro y guardadas en `localStorage`.
+- **Tabla de records local** (`localStorage`, clave `tetris-highscores`): top 5 con nombre, puntos, líneas, mejor combo y fecha. Se muestra en la pantalla de inicio y en el Game Over; si tu puntuación entra en el top puedes escribir tu nombre y la fila nueva aparece resaltada. Incluye el mejor combo y el máximo de líneas globales, y un botón **Borrar records**.
+- **Combos**: cuenta los bloqueos consecutivos que eliminan líneas (se reinicia con un bloqueo sin líneas).
 
 ---
 
@@ -84,7 +87,9 @@ Después abre `http://localhost:8000` en el navegador.
 | `↑` o `X` | Rotar la pieza en sentido horario |
 | `↓`       | Soft drop (bajar más rápido)      |
 | `Espacio` | Hard drop (caída instantánea)     |
-| `P`       | Pausar / reanudar                 |
+| `P` / `Esc` | Abrir / cerrar el menú de pausa |
+
+El menú de pausa permite **Reanudar**, **Reiniciar** la partida, **Ver controles** y elegir el **Nivel inicial** (1–10) de la próxima partida (se guarda en `localStorage`). Mientras está abierto, las teclas de juego quedan bloqueadas.
 
 ---
 
@@ -98,7 +103,7 @@ Define la estructura visual:
 
 - Un `<canvas id="board">` de **300 × 600** píxeles donde se renderiza el tablero.
 - Un panel lateral con `SCORE`, `LINES`, `LEVEL`, vista de la siguiente pieza y la lista de controles.
-- Un overlay para los estados **PAUSA** y **GAME OVER**.
+- Un menú de pausa (`#pause-menu`) y un overlay para **GAME OVER**.
 
 ### 2. `style.css`
 
@@ -176,6 +181,19 @@ Algunos parámetros fáciles de tunear en `game.js`:
 | `COLORS`       | Paleta de colores por tipo de pieza      | 7 colores             |
 | `LINE_SCORES`  | Puntos por 1, 2, 3 o 4 líneas eliminadas | `[0,100,300,500,800]` |
 | `dropInterval` | Velocidad inicial de caída en ms         | `1000`                |
+
+### Skins
+
+El selector **SKIN** del panel cambia la apariencia completa sin recargar la página (también en pausa o tras el Game Over). La elección se guarda en `localStorage` con la clave `tetris-skin`.
+
+| Skin        | Aspecto                                                                          |
+| ----------- | -------------------------------------------------------------------------------- |
+| `retro`     | Bloques cuadrados con colores planos (estilo original, por defecto)              |
+| `neon`      | Fondo negro siempre (en ambos temas) y _glow_ con `shadowBlur` del color de pieza |
+| `pastel`    | Paleta suave y bloques con esquinas redondeadas (`roundRect` o arcos manuales)    |
+| `pixel`     | Bisel y textura de píxeles en damero dibujada sobre cada bloque                  |
+
+Cada skin vive en el objeto `SKINS` de `game.js` con la forma `{ colors, grid, boardBg, drawBlock(ctx, x, y, color, size, alpha) }`. `grid` y `boardBg` en `null` usan los colores del tema claro/oscuro. Para añadir una skin nueva basta con agregar una entrada a `SKINS` y una `<option>` al `<select id="skin-select">`.
 
 > Si cambias `COLS`, `ROWS` o `BLOCK`, recuerda ajustar también `width` y `height` del `<canvas id="board">` en `index.html` para que coincida (`COLS × BLOCK` × `ROWS × BLOCK`).
 

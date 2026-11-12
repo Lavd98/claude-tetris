@@ -42,6 +42,16 @@
           <canvas id="next-canvas" width="120" height="120"></canvas>
         </div>
 
+        <div class="panel-section">
+          <label class="label" for="skin-select">SKIN</label>
+          <select id="skin-select" class="skin-select">
+            <option value="retro">Retro</option>
+            <option value="neon">Neon</option>
+            <option value="pastel">Pastel</option>
+            <option value="pixel">Pixel art</option>
+          </select>
+        </div>
+
         <div class="panel-section controls">
           <span class="label">CONTROLS</span>
           <ul>
@@ -49,7 +59,7 @@
             <li><kbd>↑</kbd> rotar</li>
             <li><kbd>↓</kbd> bajar</li>
             <li><kbd>Space</kbd> caída</li>
-            <li><kbd>P</kbd> pausa</li>
+            <li><kbd>P</kbd>/<kbd>Esc</kbd> pausa</li>
           </ul>
         </div>
       </aside>
@@ -59,9 +69,49 @@
       <div class="overlay-box">
         <p id="overlay-title">GAME OVER</p>
         <p id="overlay-score"></p>
+        <div id="hs-entry" class="hs-entry hidden">
+          <p class="hs-msg">¡Nuevo récord! Escribe tu nombre</p>
+          <div class="hs-entry-row">
+            <input id="hs-name" type="text" maxlength="12" placeholder="Tu nombre" autocomplete="off" spellcheck="false" />
+            <button id="hs-save-btn" class="hs-btn">Guardar</button>
+          </div>
+        </div>
+        <div id="hs-gameover" class="hs-wrap hidden"></div>
         <button id="restart-btn">Reiniciar</button>
       </div>
     </div>
+
+    <!-- Pantalla de inicio con la tabla de records -->
+    <div id="start-screen" class="overlay">
+      <div class="overlay-box">
+        <p class="start-title">RECORDS</p>
+        <div id="hs-start" class="hs-wrap"></div>
+        <button id="play-btn">Jugar</button>
+      </div>
+    </div>
+
+    <!-- ---- Menú de pausa ---- -->
+    <div id="pause-menu" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pause-title">
+      <div class="pause-box">
+        <p id="pause-title">PAUSA</p>
+        <button type="button" id="pause-resume" class="pause-btn">Reanudar</button>
+        <button type="button" id="pause-restart" class="pause-btn">Reiniciar</button>
+        <button type="button" id="pause-controls-btn" class="pause-btn secondary" aria-expanded="false" aria-controls="pause-controls">Ver controles</button>
+        <ul id="pause-controls" class="pause-controls" hidden>
+          <li><kbd>←</kbd><kbd>→</kbd> mover</li>
+          <li><kbd>↑</kbd>/<kbd>X</kbd> rotar</li>
+          <li><kbd>↓</kbd> bajar</li>
+          <li><kbd>Space</kbd> caída</li>
+          <li><kbd>P</kbd>/<kbd>Esc</kbd> pausa</li>
+        </ul>
+        <label class="pause-level" for="pause-start-level">
+          <span>Nivel inicial</span>
+          <select id="pause-start-level"></select>
+        </label>
+        <p class="pause-hint">Se aplica en la próxima partida</p>
+      </div>
+    </div>
+    <!-- ---- Fin menú de pausa ---- -->
   </div>
 
   <script src="game.js"></script>

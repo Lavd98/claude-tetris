@@ -69,7 +69,24 @@
       <div class="overlay-box">
         <p id="overlay-title">GAME OVER</p>
         <p id="overlay-score"></p>
+        <div id="hs-entry" class="hs-entry hidden">
+          <p class="hs-msg">¡Nuevo récord! Escribe tu nombre</p>
+          <div class="hs-entry-row">
+            <input id="hs-name" type="text" maxlength="12" placeholder="Tu nombre" autocomplete="off" spellcheck="false" />
+            <button id="hs-save-btn" class="hs-btn">Guardar</button>
+          </div>
+        </div>
+        <div id="hs-gameover" class="hs-wrap hidden"></div>
         <button id="restart-btn">Reiniciar</button>
+      </div>
+    </div>
+
+    <!-- Pantalla de inicio con la tabla de records -->
+    <div id="start-screen" class="overlay">
+      <div class="overlay-box">
+        <p class="start-title">RECORDS</p>
+        <div id="hs-start" class="hs-wrap"></div>
+        <button id="play-btn">Jugar</button>
       </div>
     </div>
   </div>

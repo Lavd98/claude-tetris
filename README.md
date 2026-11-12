@@ -43,6 +43,8 @@ Es una versión jugable del Tetris clásico con todas las mecánicas que esperar
 - **Niveles** que aumentan cada 10 líneas y aceleran la caída.
 - **Pausa** y **Game Over** con opción de reinicio.
 - **Skins** seleccionables desde el panel (_Retro_, _Neon_, _Pastel_, _Pixel art_), compatibles con el modo claro/oscuro y guardadas en `localStorage`.
+- **Tabla de records local** (`localStorage`, clave `tetris-highscores`): top 5 con nombre, puntos, líneas, mejor combo y fecha. Se muestra en la pantalla de inicio y en el Game Over; si tu puntuación entra en el top puedes escribir tu nombre y la fila nueva aparece resaltada. Incluye el mejor combo y el máximo de líneas globales, y un botón **Borrar records**.
+- **Combos**: cuenta los bloqueos consecutivos que eliminan líneas (se reinicia con un bloqueo sin líneas).
 
 ---
 

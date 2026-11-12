@@ -84,7 +84,9 @@ Después abre `http://localhost:8000` en el navegador.
 | `↑` o `X` | Rotar la pieza en sentido horario |
 | `↓`       | Soft drop (bajar más rápido)      |
 | `Espacio` | Hard drop (caída instantánea)     |
-| `P`       | Pausar / reanudar                 |
+| `P` / `Esc` | Abrir / cerrar el menú de pausa |
+
+El menú de pausa permite **Reanudar**, **Reiniciar** la partida, **Ver controles** y elegir el **Nivel inicial** (1–10) de la próxima partida (se guarda en `localStorage`). Mientras está abierto, las teclas de juego quedan bloqueadas.
 
 ---
 
@@ -98,7 +100,7 @@ Define la estructura visual:
 
 - Un `<canvas id="board">` de **300 × 600** píxeles donde se renderiza el tablero.
 - Un panel lateral con `SCORE`, `LINES`, `LEVEL`, vista de la siguiente pieza y la lista de controles.
-- Un overlay para los estados **PAUSA** y **GAME OVER**.
+- Un menú de pausa (`#pause-menu`) y un overlay para **GAME OVER**.
 
 ### 2. `style.css`
 
